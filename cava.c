@@ -383,9 +383,7 @@ as of 0.4.0 all options are specified in config file, see in '/home/username/.co
         case INPUT_PULSE:
             audio.format = 16;
             audio.rate = 44100;
-            if (strcmp(audio.source, "auto") == 0) {
-                getPulseDefaultSink((void *)&audio);
-            }
+            getPulseSink(&audio);
             thr_id = pthread_create(&p_thread, NULL, input_pulse, (void *)&audio);
             break;
 #endif

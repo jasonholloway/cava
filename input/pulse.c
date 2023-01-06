@@ -60,9 +60,16 @@ void pulseaudio_context_state_callback(pa_context *pulseaudio_context, void *use
     }
 }
 
-void getPulseDefaultSink(void *data) {
+void getPulseSink(struct audio_data* audio) {
+    if (strcmp(audio->source, "auto") == 0) {
+        getPulseDefaultSink((void *)&audio);
+    }
+    else if (strcmp(audio->source, "default") == 0) {
+        audio->source = NULL;
+    }
+}
 
-    struct audio_data *audio = (struct audio_data *)data;
+void getPulseDefaultSink(struct audio_data* audio) {
     pa_mainloop_api *mainloop_api;
     pa_context *pulseaudio_context;
     int ret;
